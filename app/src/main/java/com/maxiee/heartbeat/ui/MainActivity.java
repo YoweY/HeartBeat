@@ -1,0 +1,290 @@
+package com.maxiee.heartbeat.ui;
+
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.annotation.DrawableRes;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ImageSpan;
+import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+
+import com.maxiee.heartbeat.R;
+import com.maxiee.heartbeat.support.CrashHandler;
+import com.maxiee.heartbeat.ui.common.BaseActivity;
+import com.maxiee.heartbeat.ui.common.HintSearchBox;
+import com.maxiee.heartbeat.ui.fragments.EventListFragment;
+import com.maxiee.heartbeat.ui.fragments.EventTodayFragment;
+import com.maxiee.heartbeat.ui.fragments.LabelCloudFragment;
+import com.maxiee.heartbeat.ui.fragments.StatisticsFragment;
+import com.quinny898.library.persistentsearch.SearchBox;
+import com.quinny898.library.persistentsearch.SearchResult;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class MainActivity extends BaseActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final int SEARCH_HISTORY_SIZE = 5;
+    private static final int PERMISSION_REQUEST_STORAGE = 27;
+
+    @Bind(R.id.toolbar)         Toolbar mToolbar;
+    @Bind(R.id.fab)             FloatingActionButton mFab;
+    @Bind(R.id.searchbox)       HintSearchBox mSearchBox;
+    @Bind(R.id.main_content)    CoordinatorLayout mMainContent;
+
+    private ViewPagerAdapter mViewPagerAdapter;
+    private ArrayList<String> mSearchHistory;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+        CrashHandler.register(this);
+
+        setSupportActionBar(mToolbar);
+        setTitle("");
+
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                setTitle(mViewPagerAdapter.getFragmentTitle(tab.getPosition()));
+                tab.setContentDescription(
+                        mViewPagerAdapter.getPageIcon(
+                                tab.getPosition(),
+                                getThemeAccentColor(MainActivity.this)));
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                tab.setContentDescription(
+                        mViewPagerAdapter.getPageIcon(
+                                tab.getPosition(),
+                                ContextCompat.getColor(getApplicationContext(), R.color.tab_white_trans)
+                        )
+                );
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+        // init TabLayout
+        setTitle(mViewPagerAdapter.getFragmentTitle(0));
+        tabLayout.getTabAt(0).setContentDescription(
+                mViewPagerAdapter.getPageIcon(
+                        0,
+                        getThemeAccentColor(this)
+                )
+        );
+
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent();
+                i.setAction(Intent.ACTION_MAIN);
+                i.setClass(MainActivity.this, AddEventActivity.class);
+                startActivity(i);
+            }
+        });
+
+        mSearchHistory = new ArrayList<>();
+        mSearchBox.setLogoText(getString(R.string.search_hint));
+        mSearchBox.setSearchListener(new SearchBox.SearchListener() {
+            @Override
+            public void onSearchOpened() {
+
+            }
+
+            @Override
+            public void onSearchCleared() {
+
+            }
+
+            @Override
+            public void onSearchClosed() {
+                mSearchBox.hideCircularly(MainActivity.this);
+            }
+
+            @Override
+            public void onSearchTermChanged(String s) {
+
+            }
+
+            @Override
+            public void onSearch(String s) {
+                if (mSearchHistory.size() == SEARCH_HISTORY_SIZE) {
+                    mSearchHistory.remove(SEARCH_HISTORY_SIZE - 1);
+                }
+                if (!mSearchHistory.contains(s)) {
+                    mSearchHistory.add(0, s);
+                }
+                Intent i = new Intent(Intent.ACTION_MAIN);
+                i.setClass(MainActivity.this, SearchResultActivity.class);
+                i.putExtra("search", s);
+                startActivity(i);
+            }
+
+            @Override
+            public void onResultClick(SearchResult searchResult) {
+
+            }
+        });
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                showPermissionInfo();
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        PERMISSION_REQUEST_STORAGE);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_STORAGE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                return;
+            } else {
+                showPermissionInfo();
+            }
+        }
+    }
+
+    private void showPermissionInfo() {
+        Snackbar.make(mMainContent, getString(R.string.permission_storage), Snackbar.LENGTH_LONG).show();
+    }
+
+    private static int getThemeAccentColor (final Context context) {
+        final TypedValue value = new TypedValue();
+        context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
+        return value.data;
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        mViewPagerAdapter.addFrag(getString(R.string.event_list), R.drawable.ic_action_reorder);
+        mViewPagerAdapter.addFrag(getString(R.string.today), R.drawable.ic_action_today);
+        mViewPagerAdapter.addFrag(getString(R.string.labelCloud), R.drawable.ic_action_label);
+        mViewPagerAdapter.addFrag(getString(R.string.statistics), R.drawable.ic_action_trending_up);
+        viewPager.setAdapter(mViewPagerAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            Intent i = new Intent();
+            i.setAction(Intent.ACTION_MAIN);
+            i.setClass(MainActivity.this, SettingsActivity.class);
+            startActivity(i);
+            return true;
+        }
+
+        if (id == R.id.action_search) {
+            mSearchBox.clearSearchable();
+            for (String his: mSearchHistory) {
+                mSearchBox.addSearchable(
+                        new SearchResult(his, null));
+            }
+            mSearchBox.revealFromMenuItem(R.id.action_search, this);
+
+        }
+
+        if (id == R.id.action_helpcenter) {
+            Intent i = new Intent(this, HelpCenterActivity.class);
+            startActivity(i);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private class ViewPagerAdapter extends FragmentStatePagerAdapter {
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+        private final List<Integer> mFragmentIconList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if (position == 0) return new EventListFragment();
+            if (position == 1) return new EventTodayFragment();
+            if (position == 2) return new LabelCloudFragment();
+            if (position == 3) return new StatisticsFragment();
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentTitleList.size();
+        }
+
+        public void addFrag(String title, @DrawableRes int id) {
+            mFragmentTitleList.add(title);
+            mFragmentIconList.add(id);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return getPageIcon(position, ContextCompat.getColor(getApplicationContext(), R.color.tab_white_trans));
+        }
+
+        public CharSequence getPageIcon(int position, int filterColor) {
+            Drawable image = ResourcesCompat.getDrawable(getResources(), mFragmentIconList.get(position), null);
+            image.setColorFilter(filterColor, PorterDuff.Mode.MULTIPLY);
+            image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
+            SpannableString sb = new SpannableString(" ");
+            ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
+            sb.setSpan(imageSpan, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            return sb;
+        }
+
+        public String getFragmentTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
+}

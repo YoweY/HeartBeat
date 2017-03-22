@@ -1,0 +1,152 @@
+<resources>
+    <string name="app_name">HeartBeat</string>
+    <string name="action_settings">Settings</string>
+    <string name="add_event">Emotional moment</string>
+    <string name="first_thought">Current thought (Optional)</string>
+    <string name="notempty">Content can\'t be empty…</string>
+    <string name="firtime">1st</string>
+    <string name="sectime">2nd</string>
+    <string name="minute_ago">\u0020minute(s) ago</string>
+    <string name="hour_ago">\u0020hour(s) ago</string>
+    <string name="day_ago">\u0020day(s) ago</string>
+    <string name="add">Add</string>
+    <string name="add_thought">New thought</string>
+    <string name="adding">Adding, please wait…</string>
+    <string name="add_ok">Add successful!</string>
+    <string name="add_failed">Failed to add…</string>
+    <string name="new_tag">New</string>
+    <string name="recent_label">Recent:</string>
+    <string name="event_list">Event list</string>
+    <string name="today">Today</string>
+    <string name="event_count_text">Event(s)</string>
+    <string name="thought_count_text">Thought(s)</string>
+    <string name="labelCloud">Label cloud</string>
+    <string name="category_about">About</string>
+    <string name="settings_version">Version</string>
+    <string name="settings_github">GitHub homepage</string>
+    <string name="settings_weibo">Sina weibo</string>
+    <string name="add_image">Add an image…</string>
+    <string name="change_image">Change image…</string>
+    <string name="dialog_edit_thought">Edit thought</string>
+    <string name="done">Done</string>
+    <string name="delete">Delete</string>
+    <string name="delete_text">The action cannot be undone, continue?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="dialog_edit_event">Edit event</string>
+    <string name="settings_crash">Crash report</string>
+    <string name="settings_crash_summary">In order to protect users\' privacy, HeartBeat doesn\'t use the Internet access permission. But in order to track bugs, we need crash reports to debug. You can send it to me though Sina weibo, Email, Github, by pasting or screenshoting. Thank you for your participation, let us make HeartBeat more better!</string>
+    <string name="copy">Copy</string>
+    <string name="share">Share</string>
+    <string name="copy_finished">Copy successful!</string>
+    <string name="email">Email</string>
+    <string name="thought">Thought</string>
+    <string name="statistics">Journey of the heart</string>
+    <string name="statistics_week">A week statistics</string>
+    <string name="statistics_event_distribution">Event distribution</string>
+    <string name="distri_hint_average_head">You have\u0020</string>
+    <string name="distri_hint_average_tail">\u0020thoughts per event on average.\n</string>
+    <string name="disti_hint_waste_book">Let waste book = the event has only one thought, then your count of waste book is\u0020</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Search events…</string>
+    <string name="label_hint_001">Your first event started at\u0020</string>
+    <string name="label_hint_002">,\n</string>
+    <string name="label_hint_003">\u0020events have occurred. There are\u0020</string>
+    <string name="label_hint_004">\u0020days since then.</string>
+    <string name="settings_pattern">Gesture password</string>
+    <string name="empty">empty</string>
+    <string name="input_pattern">Input gesture password:</string>
+    <string name="verify_pattern">Verify password:</string>
+    <string name="setted">Have set</string>
+    <string name="choice">Choose</string>
+    <string name="settings_pattern_cancel">Cancel gesture password</string>
+    <string name="settings_pattern_change">Change gesture password</string>
+    <string name="input_pattern_error">Verification failed, please input again:</string>
+    <string name="input_new_pattern">Input new gesture password:</string>
+    <string name="pattern_empty">Click to set gesture password</string>
+    <string name="event_empty">Record your emotional moments.</string>
+    <string name="clout_empty">Add labels to classify your mood.</string>
+    <string name="today_empty">A new day begins,\nrecord your emotional moments.</string>
+    <string name="search_empty">Search result not found</string>
+    <string name="setting_timeaxis_sorting">Sorting order of time axis</string>
+    <string-array name="today_tips">
+        <item>Record emotional moments.</item>
+        <item>Taste every moment.</item>
+        <item>The time is short. Treasure your time.</item>
+        <item>Today will go into memory, have some thoughts?</item>
+    </string-array>
+    <string-array name="time_axis_sorting_entries" >
+        <item>Old to the new</item>
+        <item>New to the old</item>
+    </string-array>
+    <string name="time_axis_sorting_old_to_new">0</string>
+    <string name="time_axis_sorting_new_to_old">1</string>
+    <string name="icon_thanks_title">Thanks to @XXXXL</string>
+    <string name="setting_backup_cat">Back up</string>
+    <string name="setting_restore">Restore</string>
+    <string name="share_not_found">Can not find APP to share</string>
+    <string name="restore_ok">Back up successful!</string>
+    <string name="restore_failed">Failed to back up</string>
+    <string name="setting_backup_sd">Back up to external storage</string>
+    <string name="setting_backup_cloud">Back up to cloud</string>
+    <string name="backup_failed">Failed to back up.</string>
+    <string name="backup_ok">Back up successful!</string>
+    <string name="filetype_error">Filetype error, please choose the right back up file</string>
+    <string name="attention">Attention</string>
+    <string name="backup_attention">Images aren\'t backed up, please use the specialized image back up services.</string>
+    <string name="backup_sd_summary">The back up files are in HeartBeat/Backup directory of your external storage.</string>
+    <string name="thought_count_pie">\u0020thought(s)</string>
+    <string name="uri_parse_filed">Image path parsing failed.\nPlease re-add images.</string>
+    <string name="dataerror">Data error. Try to close this window and add again.</string>
+    <string name="long_image">Generate long image</string>
+    <string name="view">View</string>
+    <string name="generate_ok">Generated. Location:\n</string>
+    <string name="generating">Generating…</string>
+    <string name="exit_next_time">Press back again to exit this page.</string>
+    <string name="donate_title">Donate</string>
+    <string name="donate_summary">AliPay:</string>
+    <string name="tut_1_event">This is an event: your emotional moments recorded here. [Click me!]</string>
+    <string name="tut_1_thought_1" >This is a thought: record your thoughts about this moment.</string>
+    <string name="tut_1_thought_2" >You can add a cover image for your event by click the image on the top.</string>
+    <string name="tut_1_thought_3" >Add labels to your event, to organize your life.</string>
+    <string name="tut_2_event" >Click me to learn how to edit events and thoughts.</string>
+    <string name="tut_2_thought_1" >Long press the text of the event, you can edit/delete the event in a new page.</string>
+    <string name="tut_2_thought_2" >Long press the text of the thought, you can edit/delete the thought in a new page.</string>
+    <string name="tut_2_thought_3" >If you have added a cover image, you can change it by clicking it.</string>
+    <string name="tut_3_event" >Click me to learn how to add a thought with image.</string>
+    <string name="tut_3_thought_1" >When adding a thought, you can add an image at the same time.</string>
+    <string name="tut_3_thought_2" >It will make your moment more emotional.</string>
+    <string name="tut_4_event" >Click me to learn the last part of this tutourial: generating long image.</string>
+    <string name="tut_4_thought_1" >At the top-right corner of the screen, there is a film button.</string>
+    <string name="tut_4_thought_2" >Click it to generate a long image of this event.</string>
+    <string name="tut_4_thought_3" >Share your beautiful moments to friends!</string>
+    <string name="tut_4_thought_4" >Now the tutorial ends, but your emotional life just begins!</string>
+    <string name="change_view_mode">Change View Mode</string>
+    <string name="change_theme">Change Theme</string>
+    <string name="theme_heartbeat">HeartBeat</string>
+    <string name="theme_lemon">Lemon</string>
+    <string name="strawberry">Strawberry</string>
+    <string name="starry">Starry Night</string>
+    <string name="morning">Morning</string>
+    <string name="grape">Grape</string>
+    <string name="burberry">Burberry</string>
+    <string name="helpcenter">Help Center (Chinese)</string>
+    <string name="date">Date:</string>
+    <string name="time_full_format">Show full time format</string>
+    <string name="time_full_format_summary">Show full time format istead of ... minutes/hours/days ago.</string>
+    <string name="use_internal_gallery">Use build-in gallery</string>
+    <string name="permission_storage">HeartBeat needs the Storage permission to read and save image from your phone./n Please granted it, otherwise the app will crash sometimes.</string>
+    <string name="trans_gallery">Transfering Gallery.\nPlease wait for a moment…</string>
+    <string name="backup_all_title">Backup All (experiment)</string>
+    <string name="backup_all_summary">Backup all the data, both text and images. It will take several minutes…</string>
+    <string name="backuping">Backuping…</string>
+    <string name="restore_all_title">Restore All  (experiment)</string>
+    <string name="restore_all_summary">Note: the name of all-data backup file starts with \"[AllBackup]\". It will takes several minutes…</string>
+    <string name="restoring">Restoring…</string>
+    <string name="licenses">Licenses</string>
+    <string name="add_event_widget">New Event</string>
+    <array name="time_axis_sorting_entrie_values" >
+        <item>@string/time_axis_sorting_old_to_new</item>
+        <item>@string/time_axis_sorting_new_to_old</item>
+    </array>
+</resources>
